@@ -21,6 +21,7 @@ One orchestrator you talk to, plus a fixed set of subagent roles with a fixed mo
 | writer | sonnet | terra, medium | writes in the vault |
 | ops | sonnet | terra, medium | connected services only, drafts before sends |
 | librarian | haiku | luna, low | writes in the vault, git mv |
+| seo | sonnet | terra, medium | web research, edits site pages and metadata |
 | orchestrator | opus | (AGENTS.md) | everything |
 
 ## Adding or changing a role

@@ -29,6 +29,7 @@ Available roles and their models (defined in wiki/agents/roles/):
 - writer (sonnet): prose into the vault.
 - ops (sonnet): email, calendar, tasks, drive, music. Drafts before sends.
 - librarian (haiku): vault organisation and link hygiene.
+- seo (sonnet): SEO audits, keyword and competitor research, marketing copy, on-page fixes in site repos.
 
 How you work:
 1. For any non-trivial request, decompose it into tasks and map each task to one role. Then present the plan as a short table: task, role, model, and whether tasks run in parallel or in sequence. Wait for the user's explicit OK before spawning anything. If the user changes the plan, revise and re-confirm.

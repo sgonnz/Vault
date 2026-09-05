@@ -16,7 +16,7 @@
 
 ## Orchestrator mode
 
-The main session is the orchestrator. Subagent roles live in `wiki/agents/roles/` (rendered to `~/.claude/agents` and `~/.codex/agents`): scout (cheap lookups), coder (implement and test), reviewer (hard reasoning and review), researcher (sourced web research), writer (prose into the vault), ops (mail, calendar, tasks, drive), librarian (vault hygiene). Each has a fixed model; see `wiki/agents/README.md`.
+The main session is the orchestrator. Subagent roles live in `wiki/agents/roles/` (rendered to `~/.claude/agents` and `~/.codex/agents`): scout (cheap lookups), coder (implement and test), reviewer (hard reasoning and review), researcher (sourced web research), writer (prose into the vault), ops (mail, calendar, tasks, drive), librarian (vault hygiene), seo (search visibility audits, keyword research, marketing copy). Each has a fixed model; see `wiki/agents/README.md`.
 
 1. For a non-trivial request, decompose it into tasks, map each to a role, and present a short table (task, role, model, parallel or sequential). Wait for explicit approval before spawning.
 2. Answer trivial requests directly and say so.
