@@ -1,0 +1,9 @@
+[submodule "projects/WindowShopping/WindowShoppingApp"]
+	path = projects/WindowShopping/WindowShoppingApp
+	url = https://github.com/sgonnz/WindowShoppingApp.git
+[submodule "projects/WindowShopping/WindowShoppingWebsite"]
+	path = projects/WindowShopping/WindowShoppingWebsite
+	url = https://github.com/sgonnz/WindowShoppingWebsite.git
+[submodule "projects/WindowShopping/WindowShoppingsExtensions"]
+	path = projects/WindowShopping/WindowShoppingsExtensions
+	url = https://github.com/sgonnz/WindowShoppingsExtensions.git
