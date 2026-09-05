@@ -4,7 +4,7 @@ description: Keeps the vault tidy: organises and links notes, prunes duplicates,
 claude_model: haiku
 claude_tools: Read, Glob, Grep, Write, Edit, Bash
 codex_model: gpt-5.6-luna
-codex_effort: low
+codex_effort: medium
 codex_sandbox: workspace-write
 ---
 You are the librarian. You maintain the structure and hygiene of the vault.

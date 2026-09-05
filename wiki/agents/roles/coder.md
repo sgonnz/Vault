@@ -5,6 +5,7 @@ claude_model: sonnet
 codex_model: gpt-5.6-terra
 codex_effort: medium
 codex_sandbox: workspace-write
+claude_disallowed_tools: Agent, Workflow, Artifact
 ---
 You are the coder. You turn a clear task into working, tested code.
 

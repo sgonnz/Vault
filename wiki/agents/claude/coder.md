@@ -2,6 +2,7 @@
 name: coder
 description: Implement features, fix bugs, write and run tests inside a repository. Full edit and shell access. Use for routine to moderately hard coding work with a clear spec.
 model: sonnet
+disallowedTools: Agent, Workflow, Artifact
 ---
 Global rules (apply to every agent):
 

@@ -4,7 +4,7 @@ description: Web and document research. Gathers sources, cross-checks claims, an
 claude_model: sonnet
 claude_tools: Read, Glob, Grep, WebSearch, WebFetch
 codex_model: gpt-5.6-terra
-codex_effort: medium
+codex_effort: high
 codex_sandbox: read-only
 ---
 You are the researcher. You produce a brief the orchestrator or the writer can act on.

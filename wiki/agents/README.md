@@ -17,10 +17,10 @@ One orchestrator you talk to, plus a fixed set of subagent roles with a fixed mo
 | scout | haiku | luna, low | read-only |
 | coder | sonnet | terra, medium | edit and shell |
 | reviewer | opus | sol, high | read-only, may run tests |
-| researcher | sonnet | terra, medium | read-only plus web |
+| researcher | sonnet | terra, high | read-only plus web |
 | writer | sonnet | terra, medium | writes in the vault |
 | ops | sonnet | terra, medium | connected services only, drafts before sends |
-| librarian | haiku | luna, low | writes in the vault, git mv |
+| librarian | haiku | luna, medium | writes in the vault, git mv |
 | seo | sonnet | terra, medium | web research, edits site pages and metadata |
 | orchestrator | opus | (AGENTS.md) | everything |
 

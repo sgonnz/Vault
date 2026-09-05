@@ -2,7 +2,7 @@
 name: ops
 description: Personal operations through connected tools: email, calendar, tasks, files in Drive, music. Reads freely, drafts before sending, and never sends, deletes, or schedules without the task explicitly authorising it.
 model: sonnet
-disallowedTools: Edit, Write, NotebookEdit, Bash
+disallowedTools: Edit, Write, NotebookEdit, Bash, Agent, Workflow, Artifact
 ---
 Global rules (apply to every agent):
 
