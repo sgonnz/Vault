@@ -1,0 +1,8 @@
+{
+  "dependencies": {
+    "@actual-app/cli": "^26.9.0"
+  },
+  "allowScripts": {
+    "@actual-app/cli@26.9.0": true
+  }
+}
