@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-06T23:04:53-05:00",
+  "generatedAt": "2026-09-06T23:19:17-05:00",
   "timeZone": "America/Chicago",
   "calendar": {
     "rangeDays": 8,
@@ -14,7 +14,7 @@
       },
       {
         "calendar": "Main",
-        "title": "Flight UA 1276 — IAH → SAN",
+        "title": "Flight UA 1276 \u2014 IAH \u2192 SAN",
         "start": "2026-09-13T16:24:00-05:00",
         "end": "2026-09-13T19:46:00-05:00",
         "allDay": false,
@@ -22,7 +22,7 @@
       },
       {
         "calendar": "Main",
-        "title": "Hotel — Sheraton San Diego",
+        "title": "Hotel \u2014 Sheraton San Diego",
         "start": "2026-09-13T18:00:00-05:00",
         "end": "2026-09-14T13:00:00-05:00",
         "allDay": false,
@@ -69,7 +69,7 @@
       },
       {
         "project": "Work",
-        "title": "Re-check IIR Envoy defects/findings — confirm still broken",
+        "title": "Re-check IIR Envoy defects/findings \u2014 confirm still broken",
         "due": null,
         "priority": 0,
         "overdue": false
@@ -132,7 +132,7 @@
       },
       {
         "project": "Personal",
-        "title": "Stop at Lowe's to get weed puller",
+        "title": "Stop at Lowe\u2019s to get weed puller",
         "due": null,
         "priority": 0,
         "overdue": false
@@ -146,19 +146,45 @@
       },
       {
         "project": "Personal",
-        "title": "Garlic Parmesan Chicken Pasta — Grocery List",
+        "title": "\ud83d\uded2 Garlic Parmesan Chicken Pasta \u2014 Grocery List",
         "due": null,
         "priority": 0,
         "overdue": false
       },
       {
         "project": "Personal",
-        "title": "Mediterranean Tuna & Cannellini Bean Salad",
+        "title": "\ud83e\udd57 Mediterranean Tuna & Cannellini Bean Salad",
         "due": null,
         "priority": 0,
         "overdue": false
       }
     ]
+  },
+  "done": {
+    "yesterday": [],
+    "today": [],
+    "perDay": {
+      "2026-08-31": 3,
+      "2026-09-01": 2,
+      "2026-09-02": 4,
+      "2026-09-03": 0,
+      "2026-09-04": 0,
+      "2026-09-05": 0,
+      "2026-09-06": 0
+    },
+    "focusMinutesPerDay": {
+      "2026-08-31": 0,
+      "2026-09-01": 0,
+      "2026-09-02": 0,
+      "2026-09-03": 0,
+      "2026-09-04": 0,
+      "2026-09-05": 0,
+      "2026-09-06": 0
+    }
+  },
+  "habits": {
+    "configured": false,
+    "items": []
   },
   "windowshopping": {
     "totals": {
@@ -371,8 +397,8 @@
     "Nothing on any calendar today or through Saturday Sep 12; Work and Family calendars are empty for the whole 8-day window.",
     "Sunday Sep 13 is packed: Man United v Man City at 10:30, then flight UA 1276 IAH to SAN at 4:24 PM, and Sheraton San Diego check-in that evening.",
     "18 open tasks (14 Work, 4 Personal), none overdue. Only one has a due date (May 2027); 4 Work tasks are high priority.",
-    "WindowShopping ran 130 price checks today, the highest day in the 30-day window and about 3x the prior 7-day daily average of 41.",
-    "No WindowShopping telemetry rows on Sep 4 or Sep 5; today has 3 collections created but no products saved.",
+    "Nothing completed yesterday or today; the last completion was Wednesday Sep 2, and the 7-day total is 9 tasks.",
+    "WindowShopping ran 130 price checks today, the highest day in the 30-day window and about 3x the prior 7-day daily average of 41; no telemetry rows on Sep 4 or Sep 5.",
     "store-stats.csv has a header but no rows, so installs, uninstalls, and daily users are unknown."
   ],
   "errors": []

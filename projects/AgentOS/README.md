@@ -1,6 +1,6 @@
 # AgentOS
 
-A single dashboard page for the day: Google Calendar, TickTick tasks, and WindowShopping extension analytics (installs, uninstalls, daily usage), plus a short agent-written brief of what needs attention.
+A single dashboard page for the day: Google Calendar, TickTick tasks, completed work and habit streaks, WindowShopping extension analytics (installs, uninstalls, daily usage), a short agent-written brief of what needs attention, and the cost and health of the agent runs that keep it fresh.
 
 ## How it works
 
@@ -37,7 +37,7 @@ Headless, which is what the schedule calls:
 projects\AgentOS\refresh.cmd
 ```
 
-`refresh.cmd` runs `claude -p "Run projects/AgentOS/refresh.md"` with only the read tools it needs plus Write for the snapshot, and appends output to `data/refresh.log` (ignored by git). It is registered in Windows Task Scheduler as the task `AgentOS refresh`, hourly while logged on, starting at 07:00. Useful commands:
+`refresh.cmd` runs `claude -p "Run projects/AgentOS/refresh.md" --output-format json` with only the read tools it needs plus Write for the snapshot. The JSON that Claude prints (duration, turns, tokens, cost, final reply) is handed to `scripts/record-run.py`, which appends one entry to `data/runs.json` (last 200 runs kept). Log lines go to `data/refresh.log`. Both data files are ignored by git. It is registered in Windows Task Scheduler as the task `AgentOS refresh`, hourly while logged on, starting at 07:00. Useful commands:
 
 ```powershell
 schtasks /Run /TN "AgentOS refresh"      # refresh now
@@ -53,6 +53,9 @@ Alternatively, in an interactive Claude Code session, the `/loop` skill can reru
 |---|---|---|
 | Calendar | Google Calendar MCP, calendars Main, Work, Family, next 8 days | Live |
 | Tasks | TickTick MCP, undone tasks across Work, Personal, Inbox | Live |
+| Done | TickTick MCP, tasks completed in the last 7 days and focus (pomodoro and stopwatch) minutes per day | Live |
+| Habits | TickTick MCP, habit list and 30 days of check-ins: streak, done today, at risk, 30-day adherence | Live, shows a setup hint until habits exist in TickTick |
+| Agent runs | `data/runs.json`, written locally by `refresh.cmd` after every scheduled run | Live |
 | Daily usage | Supabase `public.extension_metric_counts`, plus `auth.users` and `public.products` activity | Live, proxy (see below) |
 | Installs and uninstalls | `data/store-stats.csv`, copied from the Chrome Web Store developer dashboard | Manual until telemetry is extended |
 
@@ -78,15 +81,31 @@ The Chrome Web Store dashboard exports installs, uninstalls, and daily users per
 
 Signed-in users active in the last 1 and 7 days come from `auth.users.last_sign_in_at`, and savers active in the last 1 and 7 days come from `public.products.updated_at`. Signed-out users are not counted anywhere, which is the gap the proposal closes.
 
+### Agent run cost analytics
+
+Every headless run records `durationSec`, `apiSec`, `turns`, `costUsd`, `inputTokens` (including cache reads and writes), `outputTokens`, `isError`, and the first 600 characters of the run's final reply. The Agent runs panel shows:
+
+- Cost over the last 7 days and the projected 30-day cost at the same rate.
+- Average cost, duration, and turns per successful run.
+- Run count with failures called out, and a warning colour when the last run failed or is more than 90 minutes old.
+- The last six runs with their one-line result, so a bad run is visible without opening the log.
+
+A refresh costs roughly what a short Claude Code session costs; if the 7-day number climbs, lower the schedule frequency in Task Scheduler or trim `refresh.md`. Manual refreshes from an interactive session are not recorded.
+
 ## Layout
 
 ```text
 AgentOS/
 |-- README.md
 |-- refresh.md                 Prompt the scheduled Claude Code run executes
+|-- refresh.cmd                Headless wrapper the schedule runs
 |-- index.html                 The dashboard
+|-- scripts/
+|   `-- record-run.py          Appends one run's stats to data/runs.json
 |-- data/
 |   |-- snapshot.json          Written by refresh.md
+|   |-- runs.json              Per-run duration, turns, cost (ignored by git)
+|   |-- refresh.log            Scheduler log (ignored by git)
 |   `-- store-stats.csv        Hand-maintained store numbers
 `-- proposals/
     `-- telemetry-install-uninstall-dau.md

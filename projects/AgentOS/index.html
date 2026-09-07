@@ -25,8 +25,21 @@
   .calendar { grid-column: span 5; }
   .tasks { grid-column: span 3; }
   .ws { grid-column: span 4; }
+  .done { grid-column: span 4; }
+  .habits { grid-column: span 3; }
+  .agent { grid-column: span 5; }
   .usage { grid-column: span 12; }
-  @media (max-width: 1100px) { .calendar, .tasks, .ws { grid-column: span 12; } }
+  @media (max-width: 1100px) { .calendar, .tasks, .ws, .done, .habits, .agent { grid-column: span 12; } }
+  .mini { display: flex; align-items: flex-end; gap: 3px; height: 36px; margin: 6px 0 2px; }
+  .mini .bar { border-radius: 2px 2px 0 0; }
+  .mini .bar.today { outline: 1px solid var(--text); }
+  .streak { font-family: var(--mono); color: var(--good); min-width: 56px; }
+  .streak.risk { color: var(--warn); }
+  .streak.none { color: var(--muted); }
+  .runs { width: 100%; border-collapse: collapse; font-family: var(--mono); font-size: 12px; margin-top: 8px; }
+  .runs td { padding: 4px 6px 4px 0; border-top: 1px solid var(--line); white-space: nowrap; }
+  .runs td.err { color: var(--bad); }
+  .runs td.res { white-space: normal; color: var(--muted); font-family: system-ui, sans-serif; }
   ul { list-style: none; margin: 0; padding: 0; }
   li { padding: 6px 0; border-top: 1px solid var(--line); display: flex; gap: 10px; align-items: baseline; }
   li:first-child { border-top: 0; }
@@ -65,6 +78,9 @@
   <section class="calendar"><h2>Calendar <span id="cal-range"></span></h2><div id="calendar"></div></section>
   <section class="tasks"><h2>Tasks</h2><ul id="tasks"></ul></section>
   <section class="ws"><h2>WindowShopping <span id="ws-source"></span></h2><div class="kpis" id="ws-kpis"></div><div class="note" id="ws-note"></div></section>
+  <section class="done"><h2>Done <span id="done-sub"></span></h2><div class="mini" id="done-spark"></div><ul id="done-list"></ul><div class="note" id="done-note"></div></section>
+  <section class="habits"><h2>Habits <span id="habits-sub"></span></h2><ul id="habits"></ul><div class="note" id="habits-note"></div></section>
+  <section class="agent"><h2>Agent runs <span id="agent-sub"></span></h2><div class="kpis" id="agent-kpis"></div><table class="runs" id="runs"></table><div class="note" id="agent-note"></div></section>
   <section class="usage"><h2>Daily usage, last 30 days</h2><div class="chart" id="usage"></div></section>
   <section class="errors" id="errors" hidden><h2>Errors</h2><ul id="error-list"></ul></section>
 </main>
@@ -163,6 +179,86 @@
   const legend = document.createElement("div"); legend.className = "legend";
   legend.innerHTML = `<span><i style="background:var(--accent)"></i>user actions (saves, removes, collections, page views), peak ${maxA}</span><span><i style="background:var(--muted)"></i>background price checks, peak ${maxP}</span>`;
   chart.appendChild(legend);
+
+  // Done: completed tasks and focus, last 7 days
+  const done = snap.done || {};
+  const perDay = done.perDay || {};
+  const focus = done.focusMinutesPerDay || {};
+  const week7 = last(7).reverse();
+  const doneTotal = week7.reduce((s, k) => s + (perDay[k] || 0), 0);
+  const focusTotal = week7.reduce((s, k) => s + (focus[k] || 0), 0);
+  $("done-sub").textContent = `${doneTotal} in 7 days` + (focusTotal ? `, ${focusTotal} min focus` : "");
+  const maxD = Math.max(1, ...week7.map(k => perDay[k] || 0));
+  week7.forEach(k => {
+    const v = perDay[k] || 0; const b = document.createElement("div");
+    b.className = "bar" + (k === todayKey() ? " today" : ""); b.style.height = Math.max(3, v / maxD * 100) + "%";
+    b.title = `${k}: ${v} done` + (focus[k] ? `, ${focus[k]} min focus` : ""); $("done-spark").appendChild(b);
+  });
+  const doneList = $("done-list");
+  const yesterday = done.yesterday || [], todayDone = done.today || [];
+  if (!yesterday.length && !todayDone.length) doneList.innerHTML = '<li class="empty">Nothing completed yesterday or today.</li>';
+  const addDone = (label, arr) => arr.forEach((t, i) => {
+    const li = document.createElement("li");
+    li.innerHTML = `<span class="time">${i === 0 ? label : ""}</span><span>${t.title}</span><span class="tag">${t.project}</span>`;
+    doneList.appendChild(li);
+  });
+  addDone("today", todayDone); addDone("yesterday", yesterday);
+  $("done-note").textContent = focusTotal ? "" : "No TickTick focus sessions in the last 7 days.";
+
+  // Habits
+  const habits = snap.habits || {};
+  const hl = $("habits");
+  const hitems = habits.items || [];
+  if (!habits.configured || !hitems.length) {
+    hl.innerHTML = '<li class="empty">No habits in TickTick yet.</li>';
+    $("habits-note").textContent = "Add habits in TickTick (Habit tab) and the next refresh picks them up: streaks, at-risk, and 30-day adherence.";
+  } else {
+    const risk = hitems.filter(h => h.atRisk).length;
+    $("habits-sub").textContent = risk ? `${risk} at risk` : "all on track";
+    hitems.forEach(h => {
+      const li = document.createElement("li");
+      const cls = h.atRisk ? "risk" : (h.streak ? "" : "none");
+      li.innerHTML = `<span class="streak ${cls}">${h.streak}d${h.doneToday ? " ✓" : ""}</span><span>${h.name}</span><span class="tag">${h.last30}/30</span>`;
+      hl.appendChild(li);
+    });
+  }
+
+  // Agent runs: from data/runs.json written by refresh.cmd
+  const runs = await fetch("data/runs.json", { cache: "no-store" }).then(r => r.ok ? r.json() : []).catch(() => []);
+  const since = Date.now() - 7 * 86400000;
+  const recent = runs.filter(r => new Date(r.startedAt) >= since);
+  const sum = (arr, k) => arr.reduce((s, r) => s + (r[k] || 0), 0);
+  const okRuns = recent.filter(r => !r.isError);
+  const lastRun = runs[runs.length - 1];
+  const money = (v) => v == null ? null : "$" + v.toFixed(2);
+  const akpis = [
+    ["cost, 7d", money(sum(recent, "costUsd")), ""],
+    ["cost per run", okRuns.length ? money(sum(okRuns, "costUsd") / okRuns.length) : null, ""],
+    ["runs, 7d", recent.length ? `${recent.length}${recent.length - okRuns.length ? " (" + (recent.length - okRuns.length) + " failed)" : ""}` : null, recent.length - okRuns.length ? "bad" : ""],
+    ["avg duration", okRuns.length ? Math.round(sum(okRuns, "durationSec") / okRuns.length) + "s" : null, ""],
+    ["avg turns", okRuns.length ? Math.round(sum(okRuns, "turns") / okRuns.length) : null, ""],
+    ["projected, 30d", okRuns.length ? money(sum(recent, "costUsd") / 7 * 30) : null, ""],
+  ];
+  const aw = $("agent-kpis");
+  akpis.forEach(([label, v, cls]) => {
+    const div = document.createElement("div"); div.className = "kpi " + cls;
+    div.innerHTML = `<div class="v ${v == null ? "na" : ""}" style="font-size:20px">${v == null ? "n/a" : v}</div><div class="l">${label}</div>`;
+    aw.appendChild(div);
+  });
+  if (lastRun) {
+    const age = (Date.now() - new Date(lastRun.startedAt)) / 60000;
+    $("agent-sub").textContent = (lastRun.isError ? "last run failed, " : "last run ") + (age < 60 ? Math.round(age) + " min ago" : new Date(lastRun.startedAt).toLocaleString());
+    if (lastRun.isError || age > 90) $("agent-sub").style.color = "var(--warn)";
+    const table = $("runs");
+    runs.slice(-6).reverse().forEach(r => {
+      const tr = document.createElement("tr");
+      const when = new Date(r.startedAt).toLocaleString([], { month: "short", day: "numeric", hour: "numeric", minute: "2-digit" });
+      tr.innerHTML = `<td>${when}</td><td class="${r.isError ? "err" : ""}">${r.isError ? "failed" : "ok"}</td><td>${r.durationSec ?? "?"}s</td><td>${r.turns ?? "?"} turns</td><td>${money(r.costUsd) ?? "?"}</td><td class="res">${(r.result || "").split("\n")[0].slice(0, 90)}</td>`;
+      table.appendChild(tr);
+    });
+  } else {
+    $("agent-note").textContent = "No runs recorded yet. refresh.cmd writes data/runs.json after each scheduled run.";
+  }
 
   // Errors
   if (snap.errors?.length) { $("errors").hidden = false; snap.errors.forEach(e => { const li = document.createElement("li"); li.textContent = e; $("error-list").appendChild(li); }); }
