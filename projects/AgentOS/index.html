@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgentOS</title>
+<style>
+  :root {
+    --bg: #0f1216; --panel: #171b21; --panel-2: #1d222a; --line: #262c35;
+    --text: #e6e9ee; --muted: #8b94a3; --accent: #7cc4ff; --good: #5fd39a; --bad: #ff7b7b; --warn: #ffc76b;
+    --mono: ui-monospace, "Cascadia Mono", Consolas, monospace;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--text); font: 14px/1.45 system-ui, -apple-system, "Segoe UI", sans-serif; }
+  header { display: flex; align-items: baseline; gap: 16px; padding: 18px 24px 8px; }
+  header h1 { margin: 0; font-size: 18px; letter-spacing: .04em; text-transform: uppercase; color: var(--muted); }
+  header .clock { font-size: 28px; font-weight: 600; }
+  header .stamp { margin-left: auto; color: var(--muted); font-family: var(--mono); font-size: 12px; }
+  header .stamp.stale { color: var(--warn); }
+  main { display: grid; grid-template-columns: repeat(12, 1fr); gap: 14px; padding: 8px 24px 24px; }
+  section { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; min-height: 120px; }
+  section h2 { margin: 0 0 10px; font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); display: flex; justify-content: space-between; }
+  section h2 span { font-weight: 400; text-transform: none; letter-spacing: 0; }
+  .brief { grid-column: span 12; }
+  .calendar { grid-column: span 5; }
+  .tasks { grid-column: span 3; }
+  .ws { grid-column: span 4; }
+  .usage { grid-column: span 12; }
+  @media (max-width: 1100px) { .calendar, .tasks, .ws { grid-column: span 12; } }
+  ul { list-style: none; margin: 0; padding: 0; }
+  li { padding: 6px 0; border-top: 1px solid var(--line); display: flex; gap: 10px; align-items: baseline; }
+  li:first-child { border-top: 0; }
+  .empty { color: var(--muted); font-style: italic; }
+  .time { font-family: var(--mono); color: var(--accent); min-width: 88px; }
+  .tag { font-size: 11px; color: var(--muted); border: 1px solid var(--line); border-radius: 4px; padding: 0 6px; }
+  .overdue .time { color: var(--bad); }
+  .daygroup { margin: 8px 0 2px; font-size: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; }
+  .kpis { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+  .kpi { background: var(--panel-2); border-radius: 8px; padding: 10px 12px; }
+  .kpi .v { font-size: 26px; font-weight: 600; font-family: var(--mono); }
+  .kpi .l { color: var(--muted); font-size: 12px; }
+  .kpi .v.na { color: var(--muted); font-size: 18px; }
+  .kpi.good .v { color: var(--good); } .kpi.bad .v { color: var(--bad); }
+  .chart { display: grid; grid-template-columns: 1fr; gap: 6px; }
+  .bars { display: flex; align-items: flex-end; gap: 3px; height: 90px; }
+  .bar { flex: 1; background: var(--accent); opacity: .85; border-radius: 2px 2px 0 0; min-height: 1px; position: relative; }
+  .bar.secondary { background: var(--muted); opacity: .5; }
+  .bar[title]:hover { opacity: 1; }
+  .axis { display: flex; justify-content: space-between; color: var(--muted); font-family: var(--mono); font-size: 11px; }
+  .legend { display: flex; gap: 14px; color: var(--muted); font-size: 12px; margin-top: 6px; }
+  .legend i { display: inline-block; width: 10px; height: 10px; border-radius: 2px; margin-right: 5px; vertical-align: -1px; }
+  .note { color: var(--muted); font-size: 12px; margin-top: 8px; }
+  .errors { grid-column: span 12; border-color: var(--bad); color: var(--bad); }
+  .brief li::before { content: "•"; color: var(--accent); }
+</style>
+</head>
+<body>
+<header>
+  <h1>AgentOS</h1>
+  <div class="clock" id="clock"></div>
+  <div class="stamp" id="stamp">loading…</div>
+</header>
+<main>
+  <section class="brief"><h2>Brief</h2><ul id="brief"></ul></section>
+  <section class="calendar"><h2>Calendar <span id="cal-range"></span></h2><div id="calendar"></div></section>
+  <section class="tasks"><h2>Tasks</h2><ul id="tasks"></ul></section>
+  <section class="ws"><h2>WindowShopping <span id="ws-source"></span></h2><div class="kpis" id="ws-kpis"></div><div class="note" id="ws-note"></div></section>
+  <section class="usage"><h2>Daily usage, last 30 days</h2><div class="chart" id="usage"></div></section>
+  <section class="errors" id="errors" hidden><h2>Errors</h2><ul id="error-list"></ul></section>
+</main>
+<script>
+(async function () {
+  const $ = (id) => document.getElementById(id);
+  const fmtTime = (iso) => new Date(iso).toLocaleTimeString([], { hour: "numeric", minute: "2-digit" });
+  const fmtDay = (iso) => new Date(iso).toLocaleDateString([], { weekday: "short", month: "short", day: "numeric" });
+  const localKey = (d) => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
+  const todayKey = () => localKey(new Date());
+  const tick = () => { $("clock").textContent = new Date().toLocaleString([], { weekday: "long", month: "long", day: "numeric", hour: "numeric", minute: "2-digit" }); };
+  tick(); setInterval(tick, 30000);
+
+  let snap;
+  try { snap = await (await fetch("data/snapshot.json", { cache: "no-store" })).json(); }
+  catch (e) { $("stamp").textContent = "snapshot.json missing. Run refresh.md"; $("stamp").className = "stamp stale"; return; }
+
+  const csv = await fetch("data/store-stats.csv", { cache: "no-store" }).then(r => r.ok ? r.text() : "").catch(() => "");
+  const store = {};
+  csv.trim().split(/\r?\n/).slice(1).forEach(line => {
+    const [date, installs, uninstalls, daily] = line.split(",").map(s => s.trim());
+    if (date) store[date] = { installs: +installs || 0, uninstalls: +uninstalls || 0, daily_users: daily === "" || daily === undefined ? null : +daily };
+  });
+
+  const ageMin = (Date.now() - new Date(snap.generatedAt)) / 60000;
+  $("stamp").textContent = "refreshed " + (ageMin < 60 ? Math.round(ageMin) + " min ago" : new Date(snap.generatedAt).toLocaleString());
+  if (ageMin > 90) $("stamp").className = "stamp stale";
+
+  // Brief
+  const brief = $("brief");
+  (snap.brief || []).forEach(b => { const li = document.createElement("li"); li.textContent = b; brief.appendChild(li); });
+  if (!snap.brief?.length) brief.innerHTML = '<li class="empty">Nothing flagged.</li>';
+
+  // Calendar grouped by day
+  $("cal-range").textContent = "next " + (snap.calendar?.rangeDays || 7) + " days";
+  const cal = $("calendar");
+  const events = (snap.calendar?.events || []).slice().sort((a, b) => a.start.localeCompare(b.start));
+  if (!events.length) cal.innerHTML = '<p class="empty">No events.</p>';
+  let lastDay = "";
+  events.forEach(ev => {
+    const day = fmtDay(ev.start);
+    if (day !== lastDay) { const h = document.createElement("div"); h.className = "daygroup"; h.textContent = day; cal.appendChild(h); lastDay = day; }
+    const li = document.createElement("li");
+    li.innerHTML = `<span class="time">${ev.allDay ? "all day" : fmtTime(ev.start)}</span><span>${ev.title}</span><span class="tag">${ev.calendar}</span>`;
+    cal.appendChild(li);
+  });
+
+  // Tasks
+  const tasks = $("tasks");
+  const items = snap.tasks?.items || [];
+  if (!items.length) tasks.innerHTML = '<li class="empty">No open tasks.</li>';
+  items.forEach(t => {
+    const li = document.createElement("li"); if (t.overdue) li.className = "overdue";
+    li.innerHTML = `<span class="time">${t.due ? fmtDay(t.due) : "no date"}</span><span>${t.title}</span><span class="tag">${t.project}</span>`;
+    tasks.appendChild(li);
+  });
+
+  // WindowShopping KPIs
+  const days = (snap.windowshopping?.days || []).slice().sort((a, b) => a.day.localeCompare(b.day));
+  const dayMap = Object.fromEntries(days.map(d => [d.day, d]));
+  const telemetryHasInstalls = days.some(d => d.installs != null);
+  $("ws-source").textContent = telemetryHasInstalls ? "installs from telemetry" : (Object.keys(store).length ? "installs from store-stats.csv" : "installs not tracked");
+  const last = (n) => { const out = []; for (let i = 0; i < n; i++) { const d = new Date(); d.setDate(d.getDate() - i); out.push(localKey(d)); } return out; };
+  const pick = (key, dates) => { let sum = 0, any = false; dates.forEach(k => { const v = telemetryHasInstalls ? dayMap[k]?.[key] : store[k]?.[key]; if (v != null) { sum += v; any = true; } }); return any ? sum : null; };
+  const week = last(7);
+  const t = snap.windowshopping?.totals || {};
+  const kpis = [
+    ["installs, 7d", pick("installs", week), "good"],
+    ["uninstalls, 7d", pick("uninstalls", week), "bad"],
+    ["daily users, latest", (() => { for (const k of last(14)) { const v = telemetryHasInstalls ? dayMap[k]?.daily_users : store[k]?.daily_users; if (v != null) return v; } return null; })(), ""],
+    ["signed-in users, 7d", t.signed_in_7d, ""],
+    ["active savers, 7d", t.active_savers_7d, ""],
+    ["accounts total", t.users_total, ""],
+  ];
+  const wrap = $("ws-kpis");
+  kpis.forEach(([label, v, cls]) => {
+    const div = document.createElement("div"); div.className = "kpi " + (v != null && v > 0 ? cls : "");
+    div.innerHTML = `<div class="v ${v == null ? "na" : ""}">${v == null ? "n/a" : v}</div><div class="l">${label}</div>`;
+    wrap.appendChild(div);
+  });
+  $("ws-note").textContent = telemetryHasInstalls ? "" : "Installs, uninstalls, and daily users come from data/store-stats.csv until the extension sends them. See proposals/.";
+
+  // Usage chart: last 30 days, user actions (accent) and price checks (grey)
+  const range = last(30).reverse();
+  const maxA = Math.max(1, ...range.map(k => dayMap[k]?.user_actions || 0));
+  const maxP = Math.max(1, ...range.map(k => dayMap[k]?.price_checks || 0));
+  const chart = $("usage");
+  const row = (key, max, cls) => {
+    const bars = document.createElement("div"); bars.className = "bars";
+    range.forEach(k => { const v = dayMap[k]?.[key] || 0; const b = document.createElement("div"); b.className = "bar " + cls; b.style.height = Math.max(1, v / max * 100) + "%"; b.title = `${k}: ${v}`; bars.appendChild(b); });
+    return bars;
+  };
+  chart.appendChild(row("user_actions", maxA, ""));
+  chart.appendChild(row("price_checks", maxP, "secondary"));
+  const axis = document.createElement("div"); axis.className = "axis"; axis.innerHTML = `<span>${range[0]}</span><span>${todayKey()}</span>`; chart.appendChild(axis);
+  const legend = document.createElement("div"); legend.className = "legend";
+  legend.innerHTML = `<span><i style="background:var(--accent)"></i>user actions (saves, removes, collections, page views), peak ${maxA}</span><span><i style="background:var(--muted)"></i>background price checks, peak ${maxP}</span>`;
+  chart.appendChild(legend);
+
+  // Errors
+  if (snap.errors?.length) { $("errors").hidden = false; snap.errors.forEach(e => { const li = document.createElement("li"); li.textContent = e; $("error-list").appendChild(li); }); }
+})();
+</script>
+</body>
+</html>

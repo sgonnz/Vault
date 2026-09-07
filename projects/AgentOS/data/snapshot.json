@@ -1,0 +1,35 @@
+{
+  "generatedAt": "2026-09-06T22:45:00-05:00",
+  "timeZone": "America/Chicago",
+  "calendar": { "rangeDays": 7, "events": [] },
+  "tasks": { "items": [] },
+  "windowshopping": {
+    "totals": { "users_total": 7, "users_new_7d": 1, "signed_in_1d": 1, "signed_in_7d": 1, "active_savers_1d": 2, "active_savers_7d": 2, "live_products": 28 },
+    "days": [
+      { "day": "2026-08-15", "user_actions": 4, "price_checks": 0, "installs": null, "uninstalls": null, "daily_users": null, "events": { "product_saved": 2, "collection_created": 1, "collection_deleted": 1 } },
+      { "day": "2026-08-16", "user_actions": 0, "price_checks": 75, "installs": null, "uninstalls": null, "daily_users": null, "events": { "price_check_completed": 75 } },
+      { "day": "2026-08-19", "user_actions": 2, "price_checks": 0, "installs": null, "uninstalls": null, "daily_users": null, "events": { "product_saved": 1, "collection_created": 1 } },
+      { "day": "2026-08-23", "user_actions": 2, "price_checks": 30, "installs": null, "uninstalls": null, "daily_users": null, "events": { "product_saved": 1, "product_removed": 1, "price_check_completed": 30 } },
+      { "day": "2026-08-24", "user_actions": 33, "price_checks": 42, "installs": null, "uninstalls": null, "daily_users": null, "events": { "product_saved": 26, "product_removed": 4, "collection_created": 3, "price_check_completed": 42 } },
+      { "day": "2026-08-25", "user_actions": 0, "price_checks": 64, "installs": null, "uninstalls": null, "daily_users": null, "events": { "price_check_completed": 64 } },
+      { "day": "2026-08-26", "user_actions": 0, "price_checks": 42, "installs": null, "uninstalls": null, "daily_users": null, "events": { "price_check_completed": 42 } },
+      { "day": "2026-08-27", "user_actions": 0, "price_checks": 43, "installs": null, "uninstalls": null, "daily_users": null, "events": { "price_check_completed": 43 } },
+      { "day": "2026-08-28", "user_actions": 0, "price_checks": 43, "installs": null, "uninstalls": null, "daily_users": null, "events": { "price_check_completed": 43 } },
+      { "day": "2026-08-29", "user_actions": 6, "price_checks": 43, "installs": null, "uninstalls": null, "daily_users": null, "events": { "product_saved": 4, "product_removed": 2, "price_check_completed": 43 } },
+      { "day": "2026-08-30", "user_actions": 42, "price_checks": 62, "installs": null, "uninstalls": null, "daily_users": null, "events": { "product_saved": 23, "product_removed": 13, "collection_created": 6, "price_check_completed": 62 } },
+      { "day": "2026-08-31", "user_actions": 5, "price_checks": 67, "installs": null, "uninstalls": null, "daily_users": null, "events": { "product_saved": 1, "product_removed": 1, "collection_created": 3, "price_check_completed": 67 } },
+      { "day": "2026-09-01", "user_actions": 3, "price_checks": 86, "installs": null, "uninstalls": null, "daily_users": null, "events": { "collection_created": 3, "price_check_completed": 86 } },
+      { "day": "2026-09-02", "user_actions": 0, "price_checks": 46, "installs": null, "uninstalls": null, "daily_users": null, "events": { "price_check_completed": 46 } },
+      { "day": "2026-09-03", "user_actions": 0, "price_checks": 23, "installs": null, "uninstalls": null, "daily_users": null, "events": { "price_check_completed": 23 } },
+      { "day": "2026-09-06", "user_actions": 3, "price_checks": 130, "installs": null, "uninstalls": null, "daily_users": null, "events": { "collection_created": 3, "price_check_completed": 130 } }
+    ]
+  },
+  "brief": [
+    "No calendar events on Main, Work, or Family for the next 7 days.",
+    "No open TickTick tasks in Work, Personal, or Inbox.",
+    "WindowShopping: 130 price checks today, the highest day on record; no user actions besides 3 collections created.",
+    "No telemetry rows on Sep 4 or Sep 5; check whether the telemetry edge function was down or the pending migration blocked writes.",
+    "Installs and uninstalls are not tracked yet. Fill data/store-stats.csv from the Chrome Web Store dashboard or ship the telemetry proposal."
+  ],
+  "errors": []
+}

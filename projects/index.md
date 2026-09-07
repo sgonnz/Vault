@@ -23,6 +23,10 @@ flowchart TB
     Website --> Supabase
 ```
 
+## AgentOS
+
+[AgentOS](AgentOS/README.md) is a personal dashboard page: Google Calendar, TickTick tasks, WindowShopping extension analytics (installs, uninstalls, daily usage), and an agent-written brief. A scheduled Claude Code run refreshes `AgentOS/data/snapshot.json` through the MCP connectors; the page is static HTML served locally.
+
 ## WindowShopping
 
 `WindowShopping/` is an umbrella folder for three independent Git repositories that make up the same product family. All three clients use the same Supabase backend for authentication and synchronized product data.
