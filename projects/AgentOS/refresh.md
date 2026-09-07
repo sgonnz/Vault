@@ -4,7 +4,7 @@ Collect the dashboard data and write `projects/AgentOS/data/snapshot.json`. Read
 
 ## 1. Calendar
 
-Call `list_events` for each calendar below with `startTime` = today 00:00 America/Chicago, `endTime` = today + 7 days, `orderBy` = `startTime`, `pageSize` = 50.
+Call `list_events` for each calendar below with `startTime` = today 00:00 America/Chicago, `endTime` = today + 8 days, `orderBy` = `startTime`, `pageSize` = 50.
 
 | Name | calendarId |
 |---|---|
@@ -16,7 +16,7 @@ Map each event to `{ "calendar", "title", "start", "end", "allDay", "location" }
 
 ## 2. Tasks
 
-Call `get_project_with_undone_tasks` for `5e0053957bba11054ab6fbba` (Work), `5e0053957ba911054ab6fbba` (Personal) and `inbox`. Map each task to `{ "project", "title", "due", "priority", "overdue" }`. `overdue` is true when `due` is before today. Sort overdue first, then by due date, then undated.
+Call `get_project_with_undone_tasks` for `5e0053957bba11054ab6fbba` (Work), `5e0053957ba911054ab6fbbb` (Personal) and `inbox`. Map each task to `{ "project", "title", "due", "priority", "overdue" }`. `overdue` is true when `due` is before today. Sort overdue first, then by due date, then undated.
 
 ## 3. WindowShopping analytics
 
@@ -56,7 +56,7 @@ Write `projects/AgentOS/data/snapshot.json` using this shape. Keep every key eve
 {
   "generatedAt": "2026-09-06T12:00:00-05:00",
   "timeZone": "America/Chicago",
-  "calendar": { "rangeDays": 7, "events": [] },
+  "calendar": { "rangeDays": 8, "events": [] },
   "tasks": { "items": [] },
   "windowshopping": {
     "totals": { "users_total": 0, "users_new_7d": 0, "signed_in_1d": 0, "signed_in_7d": 0, "active_savers_1d": 0, "active_savers_7d": 0, "live_products": 0 },

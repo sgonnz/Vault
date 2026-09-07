@@ -31,19 +31,27 @@ Manual, from Claude Code in the vault:
 Run projects/AgentOS/refresh.md
 ```
 
-Headless, which is what a schedule should call:
+Headless, which is what the schedule calls:
 
 ```powershell
-claude -p "Run projects/AgentOS/refresh.md" --allowedTools "Read,Write,Bash,mcp__claude_ai_Google_Calendar__*,mcp__claude_ai_TickTick__*,mcp__claude_ai_Supabase__execute_sql"
+projects\AgentOS\refresh.cmd
 ```
 
-To schedule it, register that command in Windows Task Scheduler (start in `C:\Users\samgo\vault`, every 30 minutes while logged on). Alternatively, in an interactive Claude Code session, the `/loop` skill can rerun the refresh prompt at an interval for as long as the session is open.
+`refresh.cmd` runs `claude -p "Run projects/AgentOS/refresh.md"` with only the read tools it needs plus Write for the snapshot, and appends output to `data/refresh.log` (ignored by git). It is registered in Windows Task Scheduler as the task `AgentOS refresh`, hourly while logged on, starting at 07:00. Useful commands:
+
+```powershell
+schtasks /Run /TN "AgentOS refresh"      # refresh now
+schtasks /Query /TN "AgentOS refresh" /V /FO LIST   # last run time and result
+schtasks /Delete /TN "AgentOS refresh" /F   # remove the schedule
+```
+
+Alternatively, in an interactive Claude Code session, the `/loop` skill can rerun the refresh prompt at an interval for as long as the session is open.
 
 ## Data sources
 
 | Widget | Source | Status |
 |---|---|---|
-| Calendar | Google Calendar MCP, calendars Main, Work, Family, next 7 days | Live |
+| Calendar | Google Calendar MCP, calendars Main, Work, Family, next 8 days | Live |
 | Tasks | TickTick MCP, undone tasks across Work, Personal, Inbox | Live |
 | Daily usage | Supabase `public.extension_metric_counts`, plus `auth.users` and `public.products` activity | Live, proxy (see below) |
 | Installs and uninstalls | `data/store-stats.csv`, copied from the Chrome Web Store developer dashboard | Manual until telemetry is extended |
