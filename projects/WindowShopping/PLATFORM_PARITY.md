@@ -13,7 +13,8 @@ the three repos do not drift again.
 | Schema | All migrations live in `WindowShoppingsExtensions/supabase/migrations`. Other repos keep only edge functions. | extension repo |
 | Notification defaults | price_drop on, back_in_stock on, on_sale off, immediate, quiet hours off. Seed once when `user_metadata` has no notify keys; otherwise remote wins, only explicit UI changes write. | each client's single default constant |
 | Delete account | Hard delete everywhere via the `delete-account` edge function. Extension keeps a separate local-only "Delete all WindowShopping data". | app repo edge function |
-| Terminology | "Collections", "My saves", "Save", "Mark purchased", "Archive", "Target price", priority "Normal / High / Must have". Never "Wishlist", "List", "Track" in product UI. | all |
+| Terminology | "Collections", "My saves", "Save", "Mark purchased", "Archive", "Target price", priority "Normal / High / Must have". Never "Wishlist", "List", "Track" in product UI. Marketing surfaces (store listings, website marketing and guide pages) lead with "wishlist" (decided 2026-09-26, wishlist-first positioning); in-product UI, including the website dashboard, keeps "Collections". | all |
+| Brand | Product name is "WindowShoppings" (extension 1.9.1, App Store listing id6802500570, iOS home screen name from the build after 2026-09-26). Domain `windowshoppings.com`. Code identifiers and storage keys keep their old names. | all |
 
 ## Intentionally platform-specific
 
