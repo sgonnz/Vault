@@ -1,6 +1,6 @@
-# WindowShopping marketing
+# WindowShoppings marketing
 
-All WindowShopping marketing information belongs in this folder. Treat these notes as the working source for marketing strategy, content, messaging, and claim review.
+All WindowShoppings marketing information belongs in this folder. Treat these notes as the working source for marketing strategy, content, messaging, and claim review.
 
 ## Start here
 

@@ -4,22 +4,23 @@ Use this note as the required claim check before approving marketing copy. It re
 
 ## Release state
 
-- Market the browser extension and website experience only.
-- The iOS app is submitted and under App Store review. It may be described only as "submitted to the App Store and coming soon, pending approval." Do not depict it, link to it, or market it as available until a live App Store URL is recorded in this section.
+- Market the browser extension, website, and iPhone app.
+- The iOS app is live on the App Store (owner confirmed 2026-09-29): https://apps.apple.com/us/app/windowshoppings/id6802500570. It may be marketed as available on iPhone.
 - Release evidence and shipped behavior outrank website copy when sources conflict.
 
 ## Approved core claims
 
-- WindowShopping is free to use and has no ads.
+- WindowShoppings is free to use and has no ads.
 - Users can save products from almost any supported HTTPS store.
 - Users can organize saved products with collections, notes, tags, priorities, and target prices.
 - The browser extension works on Chrome, Firefox, and Chromium-based browsers including Edge and Brave.
+- The iPhone app is available on the App Store.
 - An account is optional. When a user signs in, saves and collections can be backed up and viewed across devices and on the website.
 - For supported products, the extension checks about once an hour while the browser and device are available.
 - Price changes require two successful observations before the saved price changes or a price alert is sent.
 - Restock alerts require a confident match to the saved product or exact variant.
 - Users can choose immediate, daily, or weekly notifications and optional quiet hours.
-- WindowShopping does not sell user data.
+- WindowShoppings does not sell user data.
 
 ## Required qualifications
 
@@ -33,7 +34,7 @@ Include a qualification wherever content focuses on retailer coverage, automatic
 
 Short social qualification: "Monitoring is available for supported products while your browser and device are available."
 
-Longer qualification: "For supported products, WindowShopping checks about hourly while your browser and device are available. Price changes are confirmed by two successful observations. Some retailers and variants cannot be monitored reliably."
+Longer qualification: "For supported products, WindowShoppings checks about hourly while your browser and device are available. Price changes are confirmed by two successful observations. Some retailers and variants cannot be monitored reliably."
 
 ## Never claim
 
@@ -41,8 +42,8 @@ Longer qualification: "For supported products, WindowShopping checks about hourl
 - A user will always get the lowest price, save a specific amount, or never miss a deal.
 - Monitoring is real-time, continuous, instant, or runs while a browser is closed or a device is asleep.
 - A single observation triggers a price alert.
-- Retailers endorse, partner with, or recommend WindowShopping unless a documented agreement exists.
-- WindowShopping sells user data, serves ads, or reads retailer account cookies during background checks.
+- Retailers endorse, partner with, or recommend WindowShoppings unless a documented agreement exists.
+- WindowShoppings sells user data, serves ads, or reads retailer account cookies during background checks.
 
 ## Review checklist
 

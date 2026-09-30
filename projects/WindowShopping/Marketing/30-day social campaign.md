@@ -2,7 +2,7 @@
 
 ## Goal
 
-Validate the clearest acquisition message for WindowShopping: saving a find now and deciding later. Use TikTok and Instagram Reels for short demonstrations. Adapt the strongest ideas into Pinterest Pins for ongoing discovery.
+Validate the clearest acquisition message for WindowShoppings: saving a find now and deciding later. Use TikTok and Instagram Reels for short demonstrations. Adapt the strongest ideas into Pinterest Pins for ongoing discovery.
 
 Success signals: completed video views, saves, profile visits, link clicks, extension installs, and first saved product. Do not optimize for follower count alone.
 
@@ -20,7 +20,7 @@ Success signals: completed video views, saves, profile visits, link clicks, exte
 |---|---|---|---|---|
 | 1 | The tab problem | Screen record a crowded shopping tab bar, then save one item to a collection. | Pin: "Turn shopping tabs into a wishlist." | Save your next find. |
 | 2 | Save now, decide later | Voiceover: "I liked it, but I did not need to buy it today." | Quote Pin with the primary promise. | Build a better wishlist. |
-| 3 | Three-step demo | Open WindowShopping, choose a collection, then save the product. | Step Pin: Choose, save, revisit. | Add it to your browser. |
+| 3 | Three-step demo | Open WindowShoppings, choose a collection, then save the product. | Step Pin: Choose, save, revisit. | Add it to your browser. |
 | 4 | Gift list | Show a collection for one person with notes for size or color. | Gift-planning checklist Pin. | Start a gift collection. |
 | 5 | What is a shopping watchlist? | Explain the difference between bookmarks, tabs, and a watchlist. | Comparison Pin. | Save products in one place. |
 | 6 | Price-drop basics | Explain supported monitoring with the short qualification. | Pin: "How browser-based price checks work." | See monitoring status for a saved item. |
@@ -46,7 +46,7 @@ Success signals: completed video views, saves, profile visits, link clicks, exte
 | 26 | Back-to-school or work setup | Create a practical seasonal list. | Seasonal checklist Pin. | Start your next list. |
 | 27 | Saved, not pressured | Talk about reducing impulse purchases by saving first. | Quote Pin. | Give yourself time. |
 | 28 | FAQ roundup | Answer: which stores, do I need an account, how do checks work? | FAQ carousel Pin. | Visit the FAQ. |
-| 29 | Best-of recap | Combine the three clearest product moments from the month. | Pin linking to the most useful guide. | Add WindowShopping. |
+| 29 | Best-of recap | Combine the three clearest product moments from the month. | Pin linking to the most useful guide. | Add WindowShoppings. |
 | 30 | Community prompt | Ask for the next collection template viewers want. | Template-request Pin. | Tell us what you are planning. |
 
 ## Weekly review

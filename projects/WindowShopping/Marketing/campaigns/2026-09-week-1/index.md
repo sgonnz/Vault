@@ -6,7 +6,7 @@
 - Campaign owner: TBD
 - Reviewer: TBD
 - Operator: TBD
-- Primary outcome: establish an accurately measured first-week organic-social baseline for WindowShopping browser-extension acquisition.
+- Primary outcome: establish an accurately measured first-week organic-social baseline for WindowShoppings browser-extension acquisition.
 - Destination: `https://windowshoppings.com/` is the planned campaign landing page, with placement-specific UTM parameters. Launch remains blocked until this website correction is deployed, the live landing page is verified, and both extension-store listings use the approved qualified claims.
 - Publishing boundary: nothing in this folder authorizes account access, scheduling, publishing, or native-platform completion.
 

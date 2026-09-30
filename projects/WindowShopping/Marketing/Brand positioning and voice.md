@@ -2,7 +2,7 @@
 
 ## Positioning
 
-WindowShopping is a free personal shopping watchlist for people who find products across the web and want to decide on their own timeline. It turns open tabs, screenshots, and forgotten links into organized collections, then helps users notice a confirmed price drop or restock when monitoring is supported.
+WindowShoppings is a free personal shopping watchlist for people who find products across the web and want to decide on their own timeline. It turns open tabs, screenshots, and forgotten links into organized collections, then helps users notice a confirmed price drop or restock when monitoring is supported.
 
 Primary promise: **Save it now. Decide when the price is right.**
 
@@ -12,7 +12,7 @@ Supporting lines:
 - Save across stores. Shop on your terms.
 - Found it. Keep it until the time is right.
 
-WindowShopping is not a coupon service, a retailer marketplace, or a guarantee of the lowest price. Lead with the relief of saving and organizing products. Introduce monitoring as a helpful, qualified second benefit.
+WindowShoppings is not a coupon service, a retailer marketplace, or a guarantee of the lowest price. Lead with the relief of saving and organizing products. Introduce monitoring as a helpful, qualified second benefit.
 
 ## Voice
 
@@ -23,7 +23,7 @@ Warm, observant, practical, and lightly playful. Sound like the organized friend
 - Respect a shopper's budget and timing. Encourage waiting when it makes sense.
 - Be precise about how monitoring works. Credibility matters more than hype.
 
-Avoid urgency tactics, guilt, fake scarcity, excessive slang, and claims that WindowShopping knows the best deal everywhere.
+Avoid urgency tactics, guilt, fake scarcity, excessive slang, and claims that WindowShoppings knows the best deal everywhere.
 
 ## Writing patterns
 
@@ -44,6 +44,6 @@ Avoid:
 Match the ask to the stage of the content:
 
 - Discovery: "Save this idea for your next shopping reset."
-- Product demo: "Add WindowShopping to your browser and save your next find."
+- Product demo: "Add WindowShoppings to your browser and save your next find."
 - Education: "Build a wishlist you can come back to."
 - Qualified monitoring content: "Check whether your saved product is supported for monitoring."

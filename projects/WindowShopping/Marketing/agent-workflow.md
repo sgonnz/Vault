@@ -1,6 +1,6 @@
 # Content operations workflow
 
-This is the operating specification for WindowShopping marketing. It supports TikTok, Instagram, and Pinterest through Buffer with a human approval gate. It is intentionally a content system, not a publishing bot: no credentials, account connections, direct platform APIs, or unattended publishing are part of this workflow.
+This is the operating specification for WindowShoppings marketing. It supports TikTok, Instagram, and Pinterest through Buffer with a human approval gate. It is intentionally a content system, not a publishing bot: no credentials, account connections, direct platform APIs, or unattended publishing are part of this workflow.
 
 ## Objective
 
@@ -14,7 +14,7 @@ Before drafting, use shipped product behavior and release evidence as the claim 
 
 Reusable product facts:
 
-- WindowShopping is free, has no ads, and does not sell user data.
+- WindowShoppings is free, has no ads, and does not sell user data.
 - People can save products from almost any supported HTTPS store, organize them in collections, and optionally sync them with an account.
 - Price and availability monitoring apply only where a product and retailer can be checked reliably.
 - Checks run about hourly while the browser and device are available. Price changes require two successful observations.

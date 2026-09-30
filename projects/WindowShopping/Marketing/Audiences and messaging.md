@@ -40,7 +40,7 @@ Best proof: a collection grouped by person or occasion with a note for size, col
 | "Will it work with every store?" | You can save from almost any supported HTTPS store. Automatic monitoring depends on retailer support and product data. |
 | "Will I get an instant alert?" | Supported products are checked about hourly while the browser and device are available. A price change needs two successful observations before an alert. |
 | "Do I need an account?" | No. An account is optional and lets users back up and view saves across devices. |
-| "What happens to my data?" | WindowShopping has no ads and does not sell user data. |
+| "What happens to my data?" | WindowShoppings has no ads and does not sell user data. |
 
 ## Content pillars
 
